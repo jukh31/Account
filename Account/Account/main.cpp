@@ -23,7 +23,7 @@ public:
 	void Print();
 
 };
-class Check
+class Check 
 {
 private:
 	Account** account;
@@ -32,6 +32,7 @@ public:
 	int Check_ID(int ID, int NumofAccount);
 	int Check_ID(int ID);
 	void Print_All(int NumofAccount);
+	void Menu();
 
 };
 Account::Account(int Money, int ID, char* Name) :money(Money), account_ID(ID)
@@ -101,7 +102,7 @@ void Check::Print_All(int NumofAccount)
 }
 
 
-void Menu(void)
+void Check::Menu(void)
 {
 	cout << "---------Menu---------" << endl;
 	cout << "1 °èÁÂ °³¼³\n" << endl;
@@ -121,7 +122,7 @@ int main()
 	char name[30] = {};
 	while (1)
 	{
-		Menu();
+		check.Menu();
 		cout << "Select " << endl;
 		cin >> sel;
 		switch (sel)
@@ -129,7 +130,7 @@ int main()
 		case 1:
 			system("cls");
 			int ID;
-			cout << "Creating Account\n" << endl;
+			cout << "Creat new Account\n" << endl;
 			cout << "Enter Account ID" << endl;
 			cin >> ID;
 			Checking = check.Check_ID(ID, NumofAccount);
