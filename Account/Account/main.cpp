@@ -35,6 +35,25 @@ public:
 	void Menu();
 
 };
+class Exception
+{
+private:
+	int Err_Code;
+	char Err_Code_;
+	char Err_Msg[128];
+public:
+	Exception(int Ecode,const char* Emsg)
+	{
+		Err_Code = Ecode;
+		strcpy(Err_Msg, Emsg);
+	}
+	~Exception() {}
+	int Get_ErrCode() { return Err_Code; }
+	char* Get_Message() { return Err_Msg; }
+
+};
+
+
 Account::Account(int Money, int ID, char* Name) :money(Money), account_ID(ID)
 {
 	int len = strlen(Name) + 1;
@@ -116,6 +135,7 @@ int main()
 {
 	Account* account[Size];
 	Check check(account);
+	
 	int sel, NumofAccount = 0;
 	int Checking, money;
 	int result;
@@ -123,80 +143,123 @@ int main()
 	while (1)
 	{
 		check.Menu();
-		cout << "Select " << endl;
-		cin >> sel;
-		switch (sel)
+		try
 		{
-		case 1:
-			system("cls");
-			int ID;
-			cout << "Creat new Account\n" << endl;
-			cout << "Enter Account ID" << endl;
-			cin >> ID;
-			Checking = check.Check_ID(ID, NumofAccount);
-			if (Checking == NM)
+			cout << "Select " << endl;
+			cin >> sel;
+			if (sel < 1 || sel>5)
 			{
-				cout << "Enter Name" << endl;
-				cin >> name;
-				cout << "Enter Deposit amount" << endl;
-				cin >> money;
-				account[NumofAccount] = new Account(money, ID, name);
-				NumofAccount++;
+				Exception exp(1, "Enter Correct Command");
+				throw exp;
 			}
-			else
+			switch (sel)
 			{
-				cout << "Used ID" << endl;
-			}
-			break;
-		case 2:
-			system("cls");
-			cout << "deposit" << endl;
-			cout << "Enter Account ID" << endl;
-			cin >> ID;
-			Checking = check.Check_ID(ID);
-			if (Checking == NM)
-				cout << "No Match" << endl;
-			else
-			{
-				cout << "Enter Deposit Amount" << endl;
-				cin >> money;
-				account[Checking]->Deposit(money);
-				cout << "Success" << endl;
-
-			}
-			break;
-		case 3:
-			system("cls");
-			cout << "withdraw" << endl;
-			cout << "Ener Account ID" << endl;
-			cin >> ID;
-			Checking = check.Check_ID(ID);
-			if (Checking == NM)
-				cout << "No Match" << endl;
-			else
-			{
-				cout << "Enter Withdrawal Amount" << endl;
-				cin >> money;
-				result = account[Checking]->CheckBalance(money);
-				if (result == TRUE)
+			case 1:
+				
+				int ID;
+				system("cls");
+				if (NumofAccount < Size)
 				{
+					cout << "Creat new Account\n" << endl;
+					cout << "Enter Account ID" << endl;
+					cin >> ID;
+					Checking = check.Check_ID(ID, NumofAccount);
+					if (Checking == NM)
+					{
+						cout << "Enter Name" << endl;
+						cin >> name;
+
+						cout << "Enter Deposit amount" << endl;
+						cin >> money;
+						if (money <= 0)
+						{
+							Exception exp(3, "Can't enter negative or 0");
+							throw exp;
+						}
+						account[NumofAccount] = new Account(money, ID, name);
+						NumofAccount++;
+					}
+					else
+					{
+						Exception exp(4, "Used ID");
+						throw exp;
+					}
+				}
+				else
+				{
+					Exception exp(5, "No More Space");
+					throw exp;
+				}
+				break;
+			case 2:
+				system("cls");
+				cout << "deposit" << endl;
+				cout << "Enter Account ID" << endl;
+				cin >> ID;
+				Checking = check.Check_ID(ID);
+				if (Checking == NM)
+				{
+					Exception exp(6, "No Match ID");
+					throw exp;
+				}
+				else
+				{
+					cout << "Enter Deposit Amount" << endl;
+					cin >> money;
+					if (money <= 0)
+					{
+						Exception exp(3, "Can't enter negative or 0");
+						throw exp;
+					}
 					account[Checking]->Deposit(money);
 					cout << "Success" << endl;
 				}
+				break;
+			case 3:
+				system("cls");
+				cout << "withdraw" << endl;
+				cout << "Ener Account ID" << endl;
+				cin >> ID;
+				Checking = check.Check_ID(ID);
+				if (Checking == NM)
+				{
+					Exception exp(6, "No Match ID");
+					throw exp;
+				}
 				else
-					cout << "Insufficient cash" << endl;
-			}
-			break;
-		case 4:
-			system("cls");
-			check.Print_All(NumofAccount);
-			break;
-		case 5:
-			exit(0);
+				{
+					cout << "Enter Withdrawal Amount" << endl;
+					cin >> money;
+					if (money <= 0)
+					{
+						Exception exp(3, "Can't enter negative or 0");
+						throw exp;
+					}
+					result = account[Checking]->CheckBalance(money);
+					if (result == TRUE)
+					{
+						account[Checking]->Deposit(money);
+						cout << "Success" << endl;
+					}
+					else
+						cout << "Insufficient cash" << endl;
+				}
+				break;
+			case 4:
+				system("cls");
+				check.Print_All(NumofAccount);
+				break;
+			case 5:
+				exit(0);
 
-			break;
+				break;
+			}
 		}
+		catch (Exception &exp)
+		{
+			cout << "Error CODE [" << exp.Get_ErrCode()<<"] "<<exp.Get_Message() <<endl;
+		}
+
 	}
 	return 0;
 }
-
