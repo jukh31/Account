@@ -12,5 +12,6 @@ public:
 	int Check_ID(int ID);
 	void Print_All(int NumofAccount);
 	void Menu();
+	int Create_CreditClass(int CreditClass);
 
 };

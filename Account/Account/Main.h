@@ -12,5 +12,6 @@ using namespace std;
 #define Err 3
 #define NM 99
 #define Size 101
+#define Base_rate 1
 typedef enum { LV_A = 7, LV_B = 4, LV_C = 2, NO_LV = 0 }LEVEL;
 typedef enum { Nomal = 1, Credit = 2 }Account_Type;

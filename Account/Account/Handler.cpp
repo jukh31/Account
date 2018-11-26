@@ -40,3 +40,15 @@ void Handler::Menu(void)
 	cout << "4 전체 계좌 출력\n" << endl;
 	cout << "5 종료\n" << endl;
 }
+
+int Handler::Create_CreditClass(int CreditClass)
+{
+	if (CreditClass == 1)
+		return 6;
+	else if (CreditClass == 2)
+		return 3;
+	else if (CreditClass == 3)
+		return 1;
+	else
+		return Err;
+}

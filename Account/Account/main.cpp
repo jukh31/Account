@@ -11,6 +11,7 @@ int main()
 	int Checking, money;
 	int result;
 	int buf;
+	int CClass;
 	char name[30] = {};
 	while (1)
 	{
@@ -51,12 +52,26 @@ int main()
 								Exception exp(3, "Can't enter negative or 0");
 								throw exp;
 							}
-							account[NumofAccount] = new Account(money, ID, name);
+							account[NumofAccount] = new Nomal_Account(money, ID, name, Base_rate);
 							NumofAccount++;
 						}
 						else if (buf == Credit)
 						{
-							//
+							cout << "Enter your Credit class\n 1.A 2.B 3.C " << endl;
+							cin >> buf;
+							CClass = handler.Create_CreditClass(buf);
+							cout << "Enter Name" << endl;
+							cin >> name;
+							cout << "Enter Deposit amount" << endl;
+							cin >> money;
+							if (money <= 0)
+							{
+								Exception exp(3, "Can't enter negative or 0");
+								throw exp;
+							}
+							account[NumofAccount] = new HighCredit_Account(money, ID, name, Base_rate, CClass);
+							NumofAccount++;
+
 						}
 					}
 					else
