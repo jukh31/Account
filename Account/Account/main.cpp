@@ -23,12 +23,12 @@ public:
 	void Print();
 
 };
-class Check 
+class Handler 
 {
 private:
 	Account** account;
 public:
-	Check(Account** mAccount);
+	Handler(Account** mAccount);
 	int Check_ID(int ID, int NumofAccount);
 	int Check_ID(int ID);
 	void Print_All(int NumofAccount);
@@ -91,12 +91,12 @@ Account::~Account()
 {
 	delete name;
 }
-Check::Check(Account** mAccount)
+Handler::Handler(Account** mAccount)
 {
 	account = mAccount;
 }
 
-int Check::Check_ID(int ID, int NumofAccount)
+int Handler::Check_ID(int ID, int NumofAccount)
 {
 	for (int i = 0; i < NumofAccount; i++)
 	{
@@ -105,7 +105,7 @@ int Check::Check_ID(int ID, int NumofAccount)
 	}
 	return NM;
 }
-int Check::Check_ID(int ID)
+int Handler::Check_ID(int ID)
 {
 	for (int i = 0; i < Size; i++)
 	{
@@ -114,14 +114,14 @@ int Check::Check_ID(int ID)
 	}
 	return NM;
 }
-void Check::Print_All(int NumofAccount)
+void Handler::Print_All(int NumofAccount)
 {
 	for (int i = 0; i < NumofAccount; i++)
 		account[i]->Print();
 }
 
 
-void Check::Menu(void)
+void Handler::Menu(void)
 {
 	cout << "---------Menu---------" << endl;
 	cout << "1 °èÁÂ °³¼³\n" << endl;
@@ -134,7 +134,7 @@ void Check::Menu(void)
 int main()
 {
 	Account* account[Size];
-	Check check(account);
+	Handler handler(account);
 	
 	int sel, NumofAccount = 0;
 	int Checking, money;
@@ -142,7 +142,7 @@ int main()
 	char name[30] = {};
 	while (1)
 	{
-		check.Menu();
+		handler.Menu();
 		try
 		{
 			cout << "Select " << endl;
@@ -163,7 +163,7 @@ int main()
 					cout << "Creat new Account\n" << endl;
 					cout << "Enter Account ID" << endl;
 					cin >> ID;
-					Checking = check.Check_ID(ID, NumofAccount);
+					Checking = handler.Check_ID(ID, NumofAccount);
 					if (Checking == NM)
 					{
 						cout << "Enter Name" << endl;
@@ -196,7 +196,7 @@ int main()
 				cout << "deposit" << endl;
 				cout << "Enter Account ID" << endl;
 				cin >> ID;
-				Checking = check.Check_ID(ID);
+				Checking = handler.Check_ID(ID);
 				if (Checking == NM)
 				{
 					Exception exp(6, "No Match ID");
@@ -220,7 +220,7 @@ int main()
 				cout << "withdraw" << endl;
 				cout << "Ener Account ID" << endl;
 				cin >> ID;
-				Checking = check.Check_ID(ID);
+				Checking = handler.Check_ID(ID);
 				if (Checking == NM)
 				{
 					Exception exp(6, "No Match ID");
@@ -247,7 +247,7 @@ int main()
 				break;
 			case 4:
 				system("cls");
-				check.Print_All(NumofAccount);
+				handler.Print_All(NumofAccount);
 				break;
 			case 5:
 				exit(0);
