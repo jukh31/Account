@@ -143,7 +143,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Account.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="Handler.cpp" />
+    <ClCompile Include="HighCredit_Account.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Nomal_Account.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Account.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="Handler.h" />
+    <ClInclude Include="HighCredit_Account.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Nomal_Account.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
